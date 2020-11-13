@@ -29,7 +29,7 @@ class SquareIter
     public:
         constexpr SquareIter() : m_square(SQUARE_A1), m_index(0) {}
         constexpr static std::pair<std::uint8_t, Bitboard> begin() { return std::pair(0, SQUARE_A1); }
-        constexpr static std::pair<std::uint8_t, Bitboard> end() { return std::pair(63, SQUARE_H8); }
+        constexpr static std::pair<std::uint8_t, Bitboard> end() { return std::pair(64, UINT64_C(0)); }
         constexpr SquareIter& operator++()
         {
             if (std::pair(m_index, m_square) != SquareIter::end())
