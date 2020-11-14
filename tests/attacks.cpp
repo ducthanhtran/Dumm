@@ -21,3 +21,31 @@ TEST_CASE("KingAttack")
         REQUIRE_EQ(kingAttacks[index], trueKingAttack);
     }
 }
+
+TEST_CASE("KnightAttack")
+{
+    for (auto squareIt = SquareIter(); *squareIt != SquareIter::end(); ++squareIt)
+    {
+        const auto [index, square] = *squareIt;
+
+        const auto doubleNorth = shiftNorth(shiftNorth(square));
+        const auto doubleEast = shiftEast(shiftEast(square));
+        const auto doubleSouth = shiftSouth(shiftSouth(square));
+        const auto doubleWest = shiftWest(shiftWest(square));
+
+        auto trueKnightAttack = UINT64_C(0);
+        trueKnightAttack |= shiftWest(doubleNorth);
+        trueKnightAttack |= shiftEast(doubleNorth);
+
+        trueKnightAttack |= shiftNorth(doubleEast);
+        trueKnightAttack |= shiftSouth(doubleEast);
+
+        trueKnightAttack |= shiftWest(doubleSouth);
+        trueKnightAttack |= shiftEast(doubleSouth);
+        
+        trueKnightAttack |= shiftNorth(doubleWest);
+        trueKnightAttack |= shiftSouth(doubleWest);
+        
+        REQUIRE_EQ(knightAttacks[index], trueKnightAttack);
+    }
+}
