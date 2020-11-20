@@ -4,6 +4,21 @@
 #include "bitboard.hpp"
 #include <array>
 
+enum Color {WHITE, BLACK};
+
+template<Color color>
+constexpr Bitboard pawn_attacks(Bitboard pawns)
+{
+    if constexpr(color == WHITE)
+    {
+        return shiftNorth(shiftEast(pawns)) | shiftNorth(shiftWest(pawns));
+    }
+    else
+    {
+        return shiftSouth(shiftEast(pawns)) | shiftSouth(shiftWest(pawns));
+    }
+}
+
 constexpr Bitboard king_attacks(Bitboard king)
 {
     auto attacks = shiftWest(king) | shiftEast(king);
@@ -40,5 +55,7 @@ constexpr std::array<Bitboard, 64> populate_attacks(AttackGenerator &attackGen)
 
 constexpr std::array<Bitboard, 64> kingAttacks = populate_attacks(king_attacks);
 constexpr std::array<Bitboard, 64> knightAttacks = populate_attacks(knight_attacks);
+constexpr std::array<Bitboard, 64> whitePawnAttacks = populate_attacks(pawn_attacks<WHITE>);
+constexpr std::array<Bitboard, 64> blackPawnAttacks = populate_attacks(pawn_attacks<BLACK>);
 
 #endif

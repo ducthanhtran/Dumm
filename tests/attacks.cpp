@@ -2,6 +2,35 @@
 #include "bitboard.hpp"
 #include "attacks.hpp"
 
+TEST_CASE("PawnAttack")
+{
+    SUBCASE("WhitePawns")
+    {
+        for (auto squareIt = SquareIter(); *squareIt != SquareIter::end(); ++squareIt)
+        {
+            const auto [index, square] = *squareIt;
+            auto truePawnAttack = UINT64_C(0);
+            truePawnAttack |= shiftNorth(shiftWest(square));
+            truePawnAttack |= shiftNorth(shiftEast(square));
+
+            REQUIRE_EQ(whitePawnAttacks[index], truePawnAttack);
+        }
+    }
+
+    SUBCASE("BlackPawns")
+    {
+        for (auto squareIt = SquareIter(); *squareIt != SquareIter::end(); ++squareIt)
+        {
+            const auto [index, square] = *squareIt;
+            auto truePawnAttack = UINT64_C(0);
+            truePawnAttack |= shiftSouth(shiftWest(square));
+            truePawnAttack |= shiftSouth(shiftEast(square));
+
+            REQUIRE_EQ(blackPawnAttacks[index], truePawnAttack);
+        }
+    }
+}
+
 TEST_CASE("KingAttack")
 {
     for (auto squareIt = SquareIter(); *squareIt != SquareIter::end(); ++squareIt)
